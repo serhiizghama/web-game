@@ -1,0 +1,124 @@
+.combat-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .timer-section {
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .result {
+    font-size: 1.875rem;
+    font-weight: bold;
+  }
+  .progress-bar {
+    width: 100%;
+    height: 1rem;
+  }
+  .progress-bar-fill {
+    opacity: 60%;
+    height: 100%;
+    background-image: url("../../../public/img/pb.png"); 
+    transition: width 0.3s ease-in-out;
+
+    background-size: 80%; /* Растягивает изображение на весь контейнер */
+    background-attachment: fixed; 
+  }
+  .selected-cards-section {
+    height: 40%;
+    overflow-y: auto;
+  }
+  .selected-cards-title {
+    font-family: 'DS-Terminal';
+    padding: 10px 0px;
+    background: #00000000;
+    font-size: 1.2rem;
+    margin: 0px 0;
+  }
+  .selected-cards-score {
+    font-family: 'DS-Terminal';
+    padding: 10px 0px;
+    background: #00000000;
+    font-size: 3rem;
+    margin: 0px 0;
+  }
+  .selected-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .selected-card {
+    width: 2rem;
+    height: 3rem;
+    border-radius: 0.25rem;
+  }
+  .card-selection-section {
+    height: 45%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cards-container {
+    display: flex;
+    gap: 1rem;
+    border: 5px solid;
+    border-radius: 50px;
+    padding: 30px 100px;
+    background: #e7c3be57;
+  }
+
+  .divider {
+    height: 2px;
+    margin: 2px;
+    background: #e7c3be57;
+  }
+
+  .card {
+    width: 8rem;
+    height: 11rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(0, 0, 0);
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  .selected-cards-table {
+    background: #13340a5c;
+    padding: 0.5rem 0;
+  }
+
+  .card-grey { background-image: url("../../../public/img/gray.png"); background-size: 100%;}
+  .card-blue { background-image: url("../../../public/img/blue.png"); background-size: 100%;}
+  .card-red { background-image: url("../../../public/img/red.png"); background-size: 100%;}
+
+  .waiting-text {
+    font-size: 1.25rem;
+  }
+
+
+  .loader {
+    width: 50px;
+    height: 50px;
+    background: #e7c3be57;
+    border: 3px solid #000;
+    animation: rotate 1.5s linear infinite;
+}
+
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
