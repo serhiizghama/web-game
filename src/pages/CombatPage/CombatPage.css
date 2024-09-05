@@ -27,21 +27,21 @@
     background-attachment: fixed; 
   }
   .selected-cards-section {
-    height: 40%;
+    height: 50%;
     overflow-y: auto;
   }
   .selected-cards-title {
     font-family: 'DS-Terminal';
     padding: 10px 0px;
     background: #00000000;
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 0px 0;
   }
   .selected-cards-score {
     font-family: 'DS-Terminal';
     padding: 10px 0px;
     background: #00000000;
-    font-size: 3rem;
+    font-size: 2rem;
     margin: 0px 0;
   }
   .selected-cards-container {
@@ -57,7 +57,7 @@
     border-radius: 0.25rem;
   }
   .card-selection-section {
-    height: 45%;
+    height: 35%;
     padding: 1rem;
     display: flex;
     align-items: center;
@@ -80,14 +80,14 @@
   }
 
   .card {
-    width: 8rem;
-    height: 11rem;
+    width: 5rem;
+    height: 8rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     color: rgb(0, 0, 0);
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
   }
 
