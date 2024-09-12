@@ -3,9 +3,10 @@ import { motion } from "framer-motion";
 
 import "./Start.css";
 
-const AncientWheel: React.FC<{ onChangePage: () => void }> = ({
-  onChangePage,
-}) => {
+const AncientWheel: React.FC<{
+  onChangePage: () => void;
+  userPoints: number;
+}> = ({ onChangePage, userPoints }) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [waitForChangePage, setWaitForChangePage] = useState(false);
@@ -28,6 +29,12 @@ const AncientWheel: React.FC<{ onChangePage: () => void }> = ({
   return (
     <>
       <div className="container">
+        <div className="score">
+          <h3>
+            YOU HAVE <span className="counter">{userPoints} $JDC</span>
+          </h3>
+        </div>
+
         <motion.div
           className="ancient-wheel"
           animate={{ rotate: rotation }}
@@ -44,14 +51,17 @@ const AncientWheel: React.FC<{ onChangePage: () => void }> = ({
           <div className="wheel-border" />
           <div className="wheel-inner-border" />
         </motion.div>
-        <button
-          onClick={spinWheel}
-          disabled={isSpinning}
-          className="spin-button"
-        >
-          Spin
-        </button>
+        {(!isSpinning && (
+          <button
+            onClick={spinWheel}
+            disabled={isSpinning}
+            className="spin-button"
+          >
+            NEW GAME
+          </button>
+        )) || <h3 className="partner-selection">PARTNER SELECTION</h3>}
       </div>
+      <div className="container"></div>
     </>
   );
 };

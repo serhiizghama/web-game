@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./CombatPage.css";
+import { Loader } from "../../components/Loader/Loader";
 
 const MAX_ROUND = 5;
-const ROUND_TIME = 5;
+const ROUND_TIME = 10;
 
-const CombatPage: React.FC<{ onChangePage: () => void }> = ({
-  onChangePage,
-}) => {
+const CombatPage: React.FC<{
+  onChangePage: () => void;
+  onChangeUserPoints: (points: number) => void;
+  userPoints: number;
+}> = ({ onChangePage, onChangeUserPoints, userPoints }) => {
   const [selectedCards, setSelectedCards] = useState<string[]>([]);
   const [opponentCards, setOpponentCards] = useState<string[]>([]);
   const [currentRound, setCurrentRound] = useState(0);
@@ -62,33 +65,57 @@ const CombatPage: React.FC<{ onChangePage: () => void }> = ({
       }, 1000);
 
       return () => clearInterval(interval);
-    } else if (timer === 0) {
+    }
+  }, [currentRound, timer]);
+
+  const setUserDefaultCard = useCallback(() => handleCardSelect("blue"), []);
+
+  useEffect(() => {
+    if (timer === 0 && currentRound < MAX_ROUND) {
       if (showCards) {
-        handleCardSelect("blue");
+        setUserDefaultCard();
         handleOpponentCardSelect();
       }
       setShowCards(false);
-
-      if (currentRound === MAX_ROUND - 1) {
-        // Если это последний раунд
-        const result =
-          playerScore > opponentScore
-            ? "WIN"
-            : playerScore < opponentScore
-            ? "LOSE"
-            : "DRAW";
-        setGameResult(result);
-      } else {
-        setCurrentRound((prevRound) => prevRound + 1);
-        setShowCards(true);
-
-        setTimer(ROUND_TIME);
-      }
       if (selectedCards.length > opponentCards.length) {
         handleOpponentCardSelect();
       }
+
+      if (currentRound === MAX_ROUND - 1) {
+        if (
+          selectedCards.length === MAX_ROUND &&
+          opponentCards.length === MAX_ROUND &&
+          !gameResult
+        ) {
+          // Last round
+          const result =
+            playerScore > 0 ? "WIN" : playerScore < 0 ? "LOSE" : "DRAW";
+          setGameResult(result);
+        } else if (
+          selectedCards.length === MAX_ROUND &&
+          opponentCards.length === MAX_ROUND
+        ) {
+          //TODO: this case for second rerender, re-write this useEffect without fucking AI
+          onChangeUserPoints(playerScore);
+        }
+      } else {
+        setCurrentRound((prevRound) => prevRound + 1);
+        setShowCards(true);
+        setTimer(ROUND_TIME);
+      }
     }
-  }, [currentRound, timer, showCards]);
+  }, [
+    timer,
+    currentRound,
+    showCards,
+    playerScore,
+    gameResult,
+    selectedCards.length,
+    setGameResult,
+    opponentCards.length,
+    setUserDefaultCard,
+    onChangeUserPoints,
+  ]);
 
   useEffect(() => {
     if (gameResult) {
@@ -103,7 +130,7 @@ const CombatPage: React.FC<{ onChangePage: () => void }> = ({
       <div className="combat-page">
         <div className="timer-section">
           {gameResult ? (
-            <h2 className="result">{gameResult}</h2>
+            <h2 className="result">YOUR SCORE IS ${playerScore}</h2>
           ) : (
             <div className="progress-bar">
               <div
@@ -157,8 +184,9 @@ const CombatPage: React.FC<{ onChangePage: () => void }> = ({
               </div>
             </div>
           ) : (
-            <div className="loader"></div>
+            !gameResult && <Loader />
           )}
+          {gameResult && <h3>YOUR SCORE IS {userPoints}</h3>}
         </div>
       </div>
     </>
